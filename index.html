@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Calculator</title>
+<link href="https://fonts.cdnfonts.com/css/harmonyos-sans" rel="stylesheet">
+<style>
+body{
+   margin:0;
+   font-family:'HarmonyOS Sans',sans-serif;
+   background:linear-gradient(135deg,#141e30,#243b55);
+   color:#fff;
+}
+.container{
+   max-width:430px;
+   margin:auto;
+   padding:20px;
+}
+.menu{
+   font-family: 'HarmonyOS Sans',sans-serif;
+   font-size: large;
+   display:flex;
+   flex-wrap:wrap;
+   gap:10px;
+   justify-content:center;
+   margin-bottom:20px;
+}
+button{
+   border:none;
+   font-family: 'HarmonyOS Sans',sans-serif;
+   font-size: large;
+   padding:10px 14px;
+   border-radius:12px;
+   background:#007aff;
+   color:white;
+   cursor:pointer;
+}
+.page{display:none;}
+.page.active{display:block;}
+input{
+   font-family: 'HarmonyOS Sans',sans-serif;
+   font-size: large;
+   width:90%;
+   padding:12px;
+   margin:8px 0;
+   border-radius:12px;
+   border:none;
+}
+select{
+   font-family: 'HarmonyOS Sans',sans-serif;
+   font-size: large;
+   width:95.9%;
+   padding:12px;
+   margin:8px 0;
+   border-radius:12px;
+   border:none;
+}
+.result span{
+   font-size:2.25em;
+   font-weight:700;
+   display:block;
+}
+
+
+/* Calculator */
+.calc-display{
+   width:93%;
+   text-align:right;
+   font-size:2.25em;
+   font-weight:700;
+   padding:15px;
+   margin-bottom:10px;
+   border-radius:12px;
+   background:rgba(255,255,255,0.1);
+}
+.calc{
+   display:grid;
+   grid-template-columns:repeat(4,1fr);
+   gap:10px;
+}
+.calc button{
+   padding:16px;
+   font-size:18px;
+   transition:all 0.15s ease;
+}
+.calc button:active{
+   background:#00e676;
+   transform:scale(0.92);
+}
+
+
+/* Quiz */
+.question{
+   font-size:2.25em;
+   text-align:center;
+   margin:15px 0;
+}
+
+
+/* BMI */
+.normal{color:#00e676;}
+.warning{color:#ff9800;}
+.danger{
+   color:#ff3b30;
+   animation:blink 1s infinite;
+}
+@keyframes blink{
+   0%,100%{opacity:1;}
+   50%{opacity:0.3;}
+}
+</style>
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="menu">
+<button onclick="show('electric')">Electric</button>
+<button onclick="show('calc')">Calc</button>
+<button onclick="show('quiz')">Quiz</button>
+<button onclick="show('bmi')">BMI</button>
+<button onclick="show('random')">Random</button>
+<button onclick="show('currencys')">Currency</button>
+</div>
+
+
+<div id="electric" class="page active">
+<input id="watt" placeholder="Power (W)">
+<input id="hour" placeholder="Hours/day">
+<input id="day" placeholder="Days">
+<select id="currency">
+<option value="฿">THB (฿)</option>
+<option value="$">USD ($)</option>
+</select>
+<input id="rate" value="3.95">
+<button onclick="calcElectric()">Calculate</button>
+<div class="result" id="electricResult"></div>
+</div>
+
+
+<div id="calc" class="page">
+<div id="display" class="calc-display">0</div>
+
+
+<div class="calc">
+<button onclick="add('7')">7</button>
+<button onclick="add('8')">8</button>
+<button onclick="add('9')">9</button>
+<button onclick="add('/')">÷</button>
+
+
+<button onclick="add('4')">4</button>
+<button onclick="add('5')">5</button>
+<button onclick="add('6')">6</button>
+<button onclick="add('*')">×</button>
+
+
+<button onclick="add('1')">1</button>
+<button onclick="add('2')">2</button>
+<button onclick="add('3')">3</button>
+<button onclick="add('-')">−</button>
+
+
+<button onclick="add('0')">0</button>
+<button onclick="add('.')">.</button>
+<button onclick="calculate()">=</button>
+<button onclick="add('+')">+</button>
+
+
+<button onclick="clearAll()">C</button>
+<button onclick="add('(')">(</button>
+<button onclick="add(')')">)</button>
+<button onclick="add('3.14159')">pi</button>
+</div>
+</div>
+
+
+<div id="quiz" class="page">
+<select id="level">
+<option value="easy">Easy</option>
+<option value="medium">Medium</option>
+<option value="hard">Hard</option>
+</select>
+
+
+<div id="question" class="question"></div>
+
+
+<input id="answer" placeholder="Answer">
+<button onclick="check()">Submit</button>
+<button onclick="newQ()">New</button>
+
+
+<div class="result" id="quizResult"></div>
+</div>
+
+
+<div id="bmi" class="page">
+<input id="weight" placeholder="Weight (kg)">
+<input id="height" placeholder="Height (cm)">
+<button onclick="calcBMI()">Calculate</button>
+<div class="result" id="bmiResult"></div>
+</div>
+
+<div id="random" class="page">
+<input id="randomMin" placeholder="Min" value="1">
+<input id="randomMax" placeholder="Max" value="100">
+<button onclick="generateRandom()">Generate Random Number</button>
+<h1 class="result" id="randomResult"></h1>
+</div>
+
+
+<div id="currencys" class="page">
+<input id="numberCurrency" placeholder="Amount" value="1">
+<input id="currencyFrom" placeholder="From" value="USD">
+<input id="currencyUnit" placeholder="To" value="THB">
+<button onclick="fetchRateUSDtoTHB()">Fetch Rate</button>
+<p class="result" id="currencyResult1"></p>
+<p>
+    List of currency codes:
+    <br>USD - US Dollar
+    <br>THB - Thai Baht
+    <br>EUR - Euro
+    <br>JPY - Japanese Yen
+    <br>GBP - British Pound
+    <br>AUD - Australian Dollar
+    <br>CAD - Canadian Dollar
+    <br>CHF - Swiss Franc
+    <br>CNY - Chinese Yuan
+</p>
+</div>
+
+
+
+<script>
+function show(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+
+
+// Electric
+function calcElectric(){
+let w=watt.value,h=hour.value,d=day.value;
+let unitDay=(w*h)/1000;
+let unitMonth=unitDay*d;
+let costDay=unitDay*rate.value;
+let costMonth=unitMonth*rate.value;
+
+
+electricResult.innerHTML=
+`Units/day <span>${unitDay.toFixed(2)}</span>
+Units/month <span>${unitMonth.toFixed(2)}</span>
+Daily <span>${currency.value}${costDay.toFixed(2)}</span>
+Total <span>${currency.value}${costMonth.toFixed(2)}</span>`;
+}
+// Random number mode
+function generateRandom(){
+let randomNum = rand(Number(randomMin.value), Number(randomMax.value));
+document.getElementById("randomResult").innerText = randomNum;
+}
+
+
+// Calculator
+let exp="";
+function add(x){
+exp+=x;
+display.innerText=exp || "0";
+}
+function clearAll(){
+exp="";
+display.innerText="0";
+}
+function calculate(){
+try{
+let r=eval(exp);
+r=parseFloat(r.toFixed(5));
+display.innerText=r;
+exp="";
+}catch{
+display.innerText="Error";
+exp="";
+}
+}
+
+
+// Quiz
+let ans=0;
+function newQ(){
+let lvl=level.value;
+let a,b,op;
+if(lvl=="easy"){a=rand(1,10);b=rand(1,10);}
+if(lvl=="medium"){a=rand(10,50);b=rand(5,20);}
+if(lvl=="hard"){a=rand(50,100);b=rand(10,50);}
+let ops=["+","-","*","/"];
+op=ops[rand(0,3)];
+if(op=="/"){
+b=rand(1,10);
+a=b*rand(1,10);
+}
+ans=eval(a+op+b);
+question.innerText=`${a} ${op} ${b}`;
+}
+
+
+function check(){
+let u=Number(answer.value);
+if(u==ans){
+quizResult.innerHTML="<span>✔ Correct</span>";
+answer.value="";
+// Delay before showing new question
+setTimeout(newQ, 3000);
+// Clear result after 1.5 seconds
+setTimeout(() => { quizResult.innerHTML=""; }, 3000);
+}else{
+quizResult.innerHTML=`<span>✖ Wrong</span> Correct: ${ans}`;
+answer.value="";
+// Delay before showing new question
+setTimeout(newQ, 3000);
+// Clear result after 1.5 seconds
+setTimeout(() => { quizResult.innerHTML=""; }, 3000);
+}
+}
+
+
+function rand(min,max){
+return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+
+// BMI
+function calcBMI(){
+let bmi=weight.value/((height.value/100)**2);
+let cls="normal";
+let text="Normal";
+if(bmi<18.5){cls="warning"; text="Underweight";}
+else if(bmi<25){}
+else if(bmi<30){cls="warning"; text="Overweight";}
+else{cls="danger"; text="Obese";}
+bmiResult.innerHTML=`<span class="${cls}">${bmi.toFixed(2)}</span>${text}`;
+}
+
+// Currency data USD to THB
+function fetchRateUSDtoTHB(){
+let currencyUnitFrom= document.getElementById("currencyFrom");
+fetch(`https://api.exchangerate-api.com/v4/latest/${currencyFrom.value}`)
+.then(res=>res.json())
+.then(data=>{
+let currencyUnit= document.getElementById("currencyUnit");
+let num= document.getElementById("numberCurrency");
+let currency= currencyUnit.value || "THB";
+let r=data.rates[currency];
+let totalRate = r * (num.value || 1);
+if(r){
+currencyResult1.innerHTML=`<span>${num.value || 1} ${currencyUnitFrom.value} = ${totalRate.toFixed(2)} ${currency}</span>`;
+rate.value=r.toFixed(2);
+}else{
+currencyResult1.innerHTML=`<span>Currency code not found</span>`;
+}
+})
+
+}
+
+
+
+
+
+newQ();
+</script>
+
+
+</body>
+</html>
