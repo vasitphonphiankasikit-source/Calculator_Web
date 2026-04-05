@@ -292,6 +292,7 @@ th{
 </div>
 
 <div id="oilPriceAPI" class="page">
+<p>If you want the latest oil price, click the button below (Don't exceed 25000 requests per month):</p>
 <button onclick="getOilPrice()">Fetch Oil Price from API</button>
 <p class="result" id="oilPriceResultAPI"></p>
 </div>
@@ -639,6 +640,15 @@ async function getOilPrice() {
 loadOilPrices();
 goldPrice();
 newQ();
+/*
+If open this website, fetch oil prices and gold price immediately, 
+only for oil price, it will fetch from PTT API, 
+not the oil price API, because the oil price API has a limit of 100000 requests per month for free tier, 
+so I will only fetch from PTT API when open the website, and if user want to fetch from oil price API, 
+they can click the button to fetch it, but if they click too many times, 
+it may reach the limit and show error message.
+*/ 
+
 </script>
 
 
