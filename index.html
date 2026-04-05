@@ -64,12 +64,16 @@ select{
    border:none;
 }
 .result span{
-   font-size:2.25em;
+   font-size:2.5em;
    font-weight:700;
    display:block;
 }
 
-
+h1{
+   font-family: 'HarmonyOS Sans',sans-serif;
+   font-size:2.5em;
+   margin:20px 0 10px;
+}
 /* Calculator */
 .calc-display{
    font-family: 'HarmonyOS Sans',sans-serif;
@@ -167,6 +171,7 @@ th{
 <button onclick="show('currencys')">Currency</button>
 <button onclick="show('oilPricePTT')">Oil Price</button>
 <button onclick="show('goldPrice')">Gold Price</button>
+<button onclick="show('oilPriceAPI')">Oil Price API</button>
 </div>
 
 
@@ -285,6 +290,12 @@ th{
 <button onclick="goldPrice()">Fetch Gold Price</button>
 <p class="result" id="goldResult"></p>
 </div>
+
+<div id="oilPriceAPI" class="page">
+<button onclick="getOilPrice()">Fetch Oil Price from API</button>
+<p class="result" id="oilPriceResultAPI"></p>
+</div>
+
 <script>
 function show(id){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -532,6 +543,99 @@ goldResult.innerHTML = `<p>Error fetching gold price</p>`;
 });
 
 }
+
+async function getOilPrice() {
+  try {
+    const responseWTI = await fetch(
+      "https://api.oilpriceapi.com/v1/prices/latest?by_code=WTI_USD",
+      {
+        headers: {
+          "Authorization": "Token be6c72d27824f90808ba78043d07cbb46d61995f349093308f95a2b2357cf238" // ใส่ API key จริง
+        }
+      }
+    );
+
+    if (!responseWTI.ok) {
+      throw new Error(`HTTP error! status: ${responseWTI.status}`);
+    }
+  const responseBrent = await fetch(
+      "https://api.oilpriceapi.com/v1/prices/latest?by_code=BRENT_CRUDE_USD",
+      {
+        headers: {
+          "Authorization": "Token be6c72d27824f90808ba78043d07cbb46d61995f349093308f95a2b2357cf238" // ใส่ API key จริง
+        }
+      }
+    );
+
+    if (!responseBrent.ok) {
+      throw new Error(`HTTP error! status: ${responseBrent.status}`);
+    }
+    const responseDubai = await fetch(
+      "https://api.oilpriceapi.com/v1/prices/latest?by_code=DUBAI_CRUDE_USD",
+      {
+        headers: {
+          "Authorization": "Token be6c72d27824f90808ba78043d07cbb46d61995f349093308f95a2b2357cf238" // ใส่ API key จริง
+        }
+      }
+    );
+
+    if (!responseDubai.ok) {
+      throw new Error(`HTTP error! status: ${responseDubai.status}`);
+    }
+    const responseGold = await fetch(
+      "https://api.oilpriceapi.com/v1/prices/latest?by_code=GOLD_USD",
+      {
+        headers: {
+          "Authorization": "Token be6c72d27824f90808ba78043d07cbb46d61995f349093308f95a2b2357cf238" // ใส่ API key จริง
+        }
+      }
+    );
+
+    if (!responseGold.ok) {
+      throw new Error(`HTTP error! status: ${responseGold.status}`);
+    }
+    
+    const dataBrent = await responseBrent.json();
+    console.log(`Brent Price: ${dataBrent.data.formatted}`); // เช่น $76.34
+    const data = await responseWTI.json();
+    console.log(`WTI Price: ${data.data.formatted}`); // เช่น $74.52
+    const dataDubai = await responseDubai.json();
+    console.log(`Dubai Price: ${dataDubai.data.formatted}`); // เช่น $72.10
+    const dataGold = await responseGold.json();
+    console.log(`Gold Price: ${dataGold.data.formatted}`); // เช่น $1800.00
+      oilPriceResultAPI.innerHTML = `
+<h4>Latest Oil Prices (USD)</h4>
+<p>Source: <a href="https://www.oilpriceapi.com/" target="_blank" style="color:#00e676;">Oil Price API</a></p>
+<table>
+    <tr>
+        <th>Type</th>
+        <th>Price</th>
+    </tr>
+    <tr>
+        <td>WTI</td>
+        <td><strong>${data.data.formatted}</strong></td>
+    </tr>
+    <tr>
+        <td>Brent</td>
+        <td><strong>${dataBrent.data.formatted}</strong></td>
+    </tr>
+      <tr>
+         <td>Dubai</td>
+         <td><strong>${dataDubai.data.formatted}</strong></td>
+      </tr>
+         <tr>
+            <td>Gold</td>
+            <td><strong>${dataGold.data.formatted}</strong></td>
+         </tr>
+</table>
+      `;
+
+  } catch (error) {
+    console.error("Error fetching oil price:", error);
+  }
+}
+
+
 loadOilPrices();
 goldPrice();
 newQ();
