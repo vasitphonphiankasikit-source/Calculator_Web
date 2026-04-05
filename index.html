@@ -183,7 +183,7 @@ th{
 <option value="฿">THB (฿)</option>
 <option value="$">USD ($)</option>
 </select>
-<input id="rate" value="3.95">
+<input id="rateElectric" value="3.95">
 <button onclick="calcElectric()">Calculate</button>
 <div class="result" id="electricResult"></div>
 </div>
@@ -310,8 +310,8 @@ function calcElectric(){
 let w=watt.value,h=hour.value,d=day.value;
 let unitDay=(w*h)/1000;
 let unitMonth=unitDay*d;
-let costDay=unitDay*rate.value;
-let costMonth=unitMonth*rate.value;
+let costDay=unitDay*rateElectric.value;
+let costMonth=unitMonth*rateElectric.value;
 
 
 electricResult.innerHTML=
