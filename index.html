@@ -102,8 +102,9 @@ h1{
    gap:10px;
 }
 .calc button{
-   padding:16px;
-   font-size:18px;
+   font-family: 'HarmonyOS Sans',sans-serif;
+   padding:10px;
+   font-size:28px;
    transition:all 0.15s ease;
 }
 .calc button:active{
@@ -188,7 +189,7 @@ th{
 <button onclick="show('quiz')">เกมโจทย์</button>
 <button onclick="show('bmi')">คำนวณ BMI</button>
 <button onclick="show('random')">สุ่มเลข</button>
-<button onclick="show('currencys')">คำนวณเงิน</button>
+<button onclick="show('currencys')">แปลงสกุลเงิน</button>
 <button onclick="show('oilPricePTT')">ราคาน้ำมัน ปตท.</button>
 <button onclick="show('goldPrice')">ราคาทองคำ</button>
 </div>
@@ -382,7 +383,7 @@ try{
 let r=eval(exp);
 r=parseFloat(r.toFixed(5));
 display.innerText=r;
-exp="";
+exp=r.toString();
 }catch{
 display.innerText="Error";
 exp="";
