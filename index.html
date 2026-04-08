@@ -190,14 +190,14 @@ th{
 
 <div id="electric" class="page active">
 
-<input id="watt" placeholder="กำลังไฟฟ้า (W)">
-<input id="hour" placeholder="ชั่วโมงการใช้งานต่อวัน">
-<input id="day" placeholder="จำนวนวันใช้งานต่อเดือน">
+<input id="watt" inputmode="numeric" placeholder="กำลังไฟฟ้า (W)">
+<input id="hour" inputmode="numeric" placeholder="ชั่วโมงการใช้งานต่อวัน">
+<input id="day" inputmode="numeric" placeholder="จำนวนวันใช้งานต่อเดือน">
 <select id="currency">
 <option value="฿">THB (฿)</option>
 <option value="$">USD ($)</option>
 </select>
-<input id="rateElectric" placeholder="อัตราค่าไฟฟ้า (บาท/หน่วย)" value="3.95">
+<input id="rateElectric" inputmode="numeric" placeholder="อัตราค่าไฟฟ้า (บาท/หน่วย)" value="3.95">
 <button onclick="calcElectric()">คำนวณ</button>
 <div class="result" id="electricResult"></div>
 </div>
@@ -261,8 +261,8 @@ th{
 
 
 <div id="bmi" class="page">
-<input id="weight" placeholder="น้ำหนัก (kg)">
-<input id="height" placeholder="ส่วนสูง (cm)">
+<input id="weight" inputmode="numeric" placeholder="น้ำหนัก (kg)">
+<input id="height" inputmode="numeric" placeholder="ส่วนสูง (cm)">
 <button onclick="calcBMI()">คำนวณ</button>
 <div class="result" id="bmiResult"></div>
 </div>
@@ -276,7 +276,7 @@ th{
 
 
 <div id="currencys" class="page">
-<input id="numberCurrency" placeholder="Amount" value="1">
+<input id="numberCurrency" inputmode="numeric" placeholder="Amount" value="1">
 <input id="currencyFrom" placeholder="From" value="USD">
 <input id="currencyUnit" placeholder="To" value="THB">
 <button onclick="fetchRateUSDtoTHB()">แปลงสกุลเงิน</button>
