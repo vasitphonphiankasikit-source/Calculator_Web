@@ -170,7 +170,7 @@ th{
 
 
 <body>
-<h1 style="text-align: center;">เครื่องคำนวณ 9 in 1</h1>
+<h1 style="text-align: center;">เครื่องคำนวณ 8 in 1</h1>
 <p class="clock" id="clock"></p>
 
 <div class="container">
@@ -185,21 +185,20 @@ th{
 <button onclick="show('currencys')">คำนวณเงิน</button>
 <button onclick="show('oilPricePTT')">ราคาน้ำมัน ปตท.</button>
 <button onclick="show('goldPrice')">ราคาทองคำ</button>
-<button onclick="show('oilPriceAPI')">ราคาน้ำมันโลก API</button>
 </div>
 
 
 <div id="electric" class="page active">
 
-<input id="watt" placeholder="Power (W)">
-<input id="hour" placeholder="Hours/day">
-<input id="day" placeholder="Days">
+<input id="watt" placeholder="กำลังไฟฟ้า (W)">
+<input id="hour" placeholder="ชั่วโมงการใช้งานต่อวัน">
+<input id="day" placeholder="จำนวนวันใช้งานต่อเดือน">
 <select id="currency">
 <option value="฿">THB (฿)</option>
 <option value="$">USD ($)</option>
 </select>
 <input id="rateElectric" value="3.95">
-<button onclick="calcElectric()">Calculate</button>
+<button onclick="calcElectric()">คำนวณ</button>
 <div class="result" id="electricResult"></div>
 </div>
 
@@ -243,9 +242,9 @@ th{
 
 <div id="quiz" class="page">
 <select id="level">
-<option value="easy">Easy</option>
-<option value="medium">Medium</option>
-<option value="hard">Hard</option>
+<option value="easy">ง่าย</option>
+<option value="medium">ปานกลาง</option>
+<option value="hard">ยาก</option>
 </select>
 
 
@@ -253,8 +252,8 @@ th{
 
 
 <input id="answer" placeholder="Answer">
-<button onclick="check()">Submit</button>
-<button onclick="newQ()">New</button>
+<button onclick="check()">ตรวจสอบ</button>
+<button onclick="newQ()">เปลี่ยนคำถาม</button>
 
 
 <div class="result" id="quizResult"></div>
@@ -262,16 +261,16 @@ th{
 
 
 <div id="bmi" class="page">
-<input id="weight" placeholder="Weight (kg)">
-<input id="height" placeholder="Height (cm)">
-<button onclick="calcBMI()">Calculate</button>
+<input id="weight" placeholder="น้ำหนัก (kg)">
+<input id="height" placeholder="ส่วนสูง (cm)">
+<button onclick="calcBMI()">คำนวณ</button>
 <div class="result" id="bmiResult"></div>
 </div>
 
 <div id="random" class="page">
 <input id="randomMin" placeholder="Min" value="1">
 <input id="randomMax" placeholder="Max" value="100">
-<button onclick="generateRandom()">Generate Random Number</button>
+<button onclick="generateRandom()">สุ่มเลข</button>
 <div style="font-size: 2.5em;" class="result" id="randomResult"></div>
 </div>
 
@@ -280,10 +279,10 @@ th{
 <input id="numberCurrency" placeholder="Amount" value="1">
 <input id="currencyFrom" placeholder="From" value="USD">
 <input id="currencyUnit" placeholder="To" value="THB">
-<button onclick="fetchRateUSDtoTHB()">Fetch Rate</button>
+<button onclick="fetchRateUSDtoTHB()">แปลงสกุลเงิน</button>
 <p class="result" id="currencyResult1"></p>
 <p>
-    List of currency codes:
+    ตัวอย่างลิสต์รหัสสกุลเงินที่ใช้ได้ (Currency Codes) มีดังนี้:
     <br>USD - US Dollar
     <br>THB - Thai Baht
     <br>EUR - Euro
@@ -293,26 +292,21 @@ th{
     <br>CAD - Canadian Dollar
     <br>CHF - Swiss Franc
     <br>CNY - Chinese Yuan
+    <br>HKD - Hong Kong Dollar
+    <br>NZD - New Zealand Dollar
 </p>
 </div>
 
 <div id="oilPricePTT" class="page">
-<button onclick="loadOilPrices()">Fetch Oil Price from PTT</button>
+<button onclick="loadOilPrices()">อัพเดตราคาน้ำมัน</button>
 <p class="result" id="oilPriceResult"></p>
 </div>
 
 <div id="goldPrice" class="page">
-<button onclick="goldPrice()">Fetch Gold Price</button>
+<button onclick="goldPrice()">อัพเดตราค่าทองคำ</button>
 <p class="result" id="goldResult"></p>
 </div>
 
-<div id="oilPriceAPI" class="page">
-<p>ถ้าต้องการราคาน้ำมันจาก API ให้กดปุ่ม "Fetch Oil Price from API" ราคาน้ำมันจาก API จะเป็นราคาน้ำมันดิบในตลาดโลก เช่น WTI, Brent, Dubai และราคาทองคำด้วย (หน่วยเป็น USD)</p>
-<button onclick="getOilPrice()">Fetch Oil Price from API</button>
-<p class="result" id="oilPriceResultAPI"></p>
-
-<p>หมายเหตุ: อย่าใช้บ่อยมากกว่า 25000 ครั้งต่อเดือน เนื่องจากมีข้อจำกัดของ API</p>
-</div>
 
 <p> จัดทำโดย : JJ Vasitphon</p>
 <script>
@@ -396,14 +390,14 @@ question.innerText=`${a} ${op} ${b}`;
 function check(){
 let u=Number(answer.value);
 if(u==ans){
-quizResult.innerHTML="<span>✔ Correct</span>";
+quizResult.innerHTML="<span>✔ ถูกต้อง</span>";
 answer.value="";
 // Delay before showing new question
 setTimeout(newQ, 3000);
 // Clear result after 1.5 seconds
 setTimeout(() => { quizResult.innerHTML=""; }, 3000);
 }else{
-quizResult.innerHTML=`<span>✖ Wrong</span> Correct: ${ans}`;
+quizResult.innerHTML=`<span>✖ ไม่ถูกต้อง</span> คำตอบ: ${ans}`;
 answer.value="";
 // Delay before showing new question
 setTimeout(newQ, 3000);
@@ -426,10 +420,10 @@ function calcBMI(){
 let bmi=weight.value/((height.value/100)**2);
 let cls="normal";
 let text="Normal";
-if(bmi<18.5){cls="warning"; text="Underweight";}
-else if(bmi<25){}
-else if(bmi<30){cls="warning"; text="Overweight";}
-else{cls="danger"; text="Obese";}
+if(bmi<18.5){cls="warning"; text="น้ำหนักต่ำ";}
+else if(bmi<25){text="น้ำหนักปกติ";}
+else if(bmi<30){cls="warning"; text="น้ำหนักเกิน";}
+else{cls="danger"; text="อ้วนเกินไป";}
 bmiResult.innerHTML=`<span class="${cls}">${bmi.toFixed(2)}</span>${text}`;
 }
 
@@ -467,8 +461,8 @@ try {
 <p>หน่วย : บาท/ลิตร</p>
 <table>
     <tr>
-        <th>Type</th>
-        <th>Price</th>
+        <th>ชนิดน้ำมัน</th>
+        <th>ราคา</th>
     </tr>
     <tr>
         <td>${pttPrices.gasoline_95.name}</td>
@@ -513,7 +507,7 @@ try {
 </table>
             `;
         } catch (error) {
-            oilPriceResult.innerHTML = `<span>Error fetching oil prices</span>`;
+            oilPriceResult.innerHTML = `<span>ไม่สามารถดึงข้อมูลราคาน้ำมันได้</span>`;
         }
     }
 /*
@@ -549,121 +543,28 @@ goldResult.innerHTML = `
 <p>หน่วย : บาท/กรัม</p>
 <table>
     <tr>
-        <th>Type</th>
-        <th>Price Buy</th>
-        <th>Price Sell</th>
+        <th>ชนิดทองคำ</th>
+        <th>ราคาซื้อ</th>
+        <th>ราคาขาย</th>
     </tr>
     <tr>
-        <td>ทองคำ</td>
-        <td class="bigNumber">${goldBuy}</td>
-        <td class="bigNumber">${goldSell}</td>
-    </tr>
-     <tr>
         <td>ทองคำแท่ง</td>
         <td class="bigNumber">${goldBarBuy}</td>
         <td class="bigNumber">${goldBarSell}</td>
+    </tr>
+     <tr>
+        <td>ทองคำ</td>
+        <td class="bigNumber">${goldBuy}</td>
+        <td class="bigNumber">${goldSell}</td>
     </tr>
 </table>
 `;
 })
 .catch(err=>{
-goldResult.innerHTML = `<p>Error fetching gold price</p>`;
+goldResult.innerHTML = `<p>ไม่สามารถดึงข้อมูลราคาทองคำได้</p>`;
 });
 
 }
-
-async function getOilPrice() {
-  try {
-    const responseWTI = await fetch(
-      "https://api.oilpriceapi.com/v1/prices/latest?by_code=WTI_USD",
-      {
-        headers: {
-          "Authorization": "Token be6c72d27824f90808ba78043d07cbb46d61995f349093308f95a2b2357cf238" // ใส่ API key จริง
-        }
-      }
-    );
-
-    if (!responseWTI.ok) {
-      throw new Error(`HTTP error! status: ${responseWTI.status}`);
-    }
-  const responseBrent = await fetch(
-      "https://api.oilpriceapi.com/v1/prices/latest?by_code=BRENT_CRUDE_USD",
-      {
-        headers: {
-          "Authorization": "Token be6c72d27824f90808ba78043d07cbb46d61995f349093308f95a2b2357cf238" // ใส่ API key จริง
-        }
-      }
-    );
-
-    if (!responseBrent.ok) {
-      throw new Error(`HTTP error! status: ${responseBrent.status}`);
-    }
-    const responseDubai = await fetch(
-      "https://api.oilpriceapi.com/v1/prices/latest?by_code=DUBAI_CRUDE_USD",
-      {
-        headers: {
-          "Authorization": "Token be6c72d27824f90808ba78043d07cbb46d61995f349093308f95a2b2357cf238" // ใส่ API key จริง
-        }
-      }
-    );
-
-    if (!responseDubai.ok) {
-      throw new Error(`HTTP error! status: ${responseDubai.status}`);
-    }
-    const responseGold = await fetch(
-      "https://api.oilpriceapi.com/v1/prices/latest?by_code=GOLD_USD",
-      {
-        headers: {
-          "Authorization": "Token be6c72d27824f90808ba78043d07cbb46d61995f349093308f95a2b2357cf238" // ใส่ API key จริง
-        }
-      }
-    );
-
-    if (!responseGold.ok) {
-      throw new Error(`HTTP error! status: ${responseGold.status}`);
-    }
-    const nowDate = new Date();
-    const dataBrent = await responseBrent.json();
-    console.log(`Brent Price: ${dataBrent.data.formatted}`); // เช่น $76.34
-    const data = await responseWTI.json();
-    console.log(`WTI Price: ${data.data.formatted}`); // เช่น $74.52
-    const dataDubai = await responseDubai.json();
-    console.log(`Dubai Price: ${dataDubai.data.formatted}`); // เช่น $72.10
-    const dataGold = await responseGold.json();
-    console.log(`Gold Price: ${dataGold.data.formatted}`); // เช่น $1800.00
-      oilPriceResultAPI.innerHTML = `
-<p style="font-size: 1.65em;">ราคาน้ำมันโลกล่าสุด (USD)</p>
-<p> เมื่อ ${nowDate.toLocaleString()}</p>
-<p>อ้างอิง: <a href="https://www.oilpriceapi.com/" target="_blank" style="color:#00e676;">Oil Price API</a></p>
-<table>
-    <tr>
-        <th>Type</th>
-        <th>Price</th>
-    </tr>
-    <tr>
-        <td>WTI</td>
-        <td class="bigNumber">${data.data.formatted}</td>
-    </tr>
-    <tr>
-        <td>Brent</td>
-        <td class="bigNumber">${dataBrent.data.formatted}</td>
-    </tr>
-      <tr>
-         <td>Dubai</td>
-         <td class="bigNumber">${dataDubai.data.formatted}</td>
-      </tr>
-         <tr>
-            <td>Gold</td>
-            <td class="bigNumber">${dataGold.data.formatted}</td>
-         </tr>
-</table>
-      `;
-
-  } catch (error) {
-    console.error("Error fetching oil price:", error);
-  }
-}
-
 
 loadOilPrices();
 goldPrice();
@@ -673,7 +574,7 @@ setInterval(updateClock, 1000); // Update clock every second
 /*
 If open this website, fetch oil prices and gold price immediately, 
 only for oil price, it will fetch from PTT API, 
-not the oil price API, because the oil price API has a limit of 100000 requests per month for free tier, 
+not the oil price API, because the oil price API has a limit of 50 requests per month for free tier, 
 so I will only fetch from PTT API when open the website, and if user want to fetch from oil price API, 
 they can click the button to fetch it, but if they click too many times, 
 it may reach the limit and show error message.
