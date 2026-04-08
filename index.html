@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ultimate Calculator</title>
+<!-- HarmonyOS Sans -->
+<link href="https://fonts.cdnfonts.com/css/harmonyos-sans" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -63,30 +65,31 @@ select{
    border:none;
 }
 .result span{
-   font-size:2.5em;
-   font-weight:500;
+   font-family: 'HarmonyOS Sans',sans-serif;
+   font-size:2.75em;
+   font-weight:600;
    display:block;
 }
 
 .clock{
-   font-family: 'Kanit',monospace;
-   font-size: 1.25em;
+   font-family: 'HarmonyOS Sans',monospace;
+   font-size: 2.0em;
    text-align: center;
    margin-bottom: 0px;
    color: #f1f1f1;
 }
 h1{
    font-family: 'Kanit',sans-serif;
-   font-size:2.5em;
+   font-size:3.0em;
    margin:20px 0 10px;
 }
 /* Calculator */
 .calc-display{
-   font-family: 'Kanit',monospace;
+   font-family: 'HarmonyOS Sans',monospace;
    width:93%;
    text-align:right;
-   font-size:2.25em;
-   font-weight:500;
+   font-size:2.50em;
+   font-weight:600;
    padding:15px;
    margin-bottom:10px;
    border-radius:12px;
@@ -110,7 +113,8 @@ h1{
 
 /* Quiz */
 .question{
-   font-size:2.25em;
+   font-family: 'HarmonyOS Sans',sans-serif;
+   font-size:2.65em;
    text-align:center;
    margin:15px 0;
 }
@@ -158,9 +162,10 @@ th{
    background-color:rgba(255,255,255,0.1);
 }
 .bigNumber{
-   font-size:2.5em;
+   font-family: 'HarmonyOS Sans',sans-serif;
+   font-size:2.65em;
    text-align: center;
-   font-weight:500;
+   font-weight:600;
    color:#ffffff;
 }
 
@@ -271,7 +276,7 @@ th{
 <input id="randomMin" placeholder="Min" value="1">
 <input id="randomMax" placeholder="Max" value="100">
 <button onclick="generateRandom()">สุ่มเลข</button>
-<div style="font-size: 2.5em;" class="result" id="randomResult"></div>
+<div style="font-size: 3.0em; font-family: 'HarmonyOS Sans', sans-serif; font-weight:600;" class="result" id="randomResult"></div>
 </div>
 
 
@@ -280,7 +285,7 @@ th{
 <input id="currencyFrom" placeholder="From" value="USD">
 <input id="currencyUnit" placeholder="To" value="THB">
 <button onclick="fetchRateUSDtoTHB()">แปลงสกุลเงิน</button>
-<p class="result" id="currencyResult1"></p>
+<p style="font-size: 1.75em;" class="result" id="currencyResult1"></p>
 <p>
     ตัวอย่างลิสต์รหัสสกุลเงินที่ใช้ได้ (Currency Codes) มีดังนี้:
     <br>USD - US Dollar
@@ -333,7 +338,7 @@ document.getElementById(id).classList.add('active');
 
 function updateClock() {
     const now = new Date();
-    let date = now.toLocaleDateString('th-TH', { day: '2-digit', month: 'short', year: 'numeric' });
+    let date = now.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' });
     let hours = String(now.getHours()).padStart(2, '0');
     let minutes = String(now.getMinutes()).padStart(2, '0');
     let seconds = String(now.getSeconds()).padStart(2, '0');
@@ -349,10 +354,10 @@ let costMonth=unitMonth*rateElectric.value;
 
 
 electricResult.innerHTML=
-`Units/day <span>${unitDay.toFixed(2)}</span>
-Units/month <span>${unitMonth.toFixed(2)}</span>
-Total 1 day <span>${currency.value}  ${costDay.toFixed(2)}</span>
-Total 1 month <span>${currency.value}  ${costMonth.toFixed(2)}</span>`;
+`หน่วยต่อวัน <span>${unitDay.toFixed(2)}</span>
+หน่วยต่อเดือน <span>${unitMonth.toFixed(2)}</span>
+รวม 1 วัน <span>${currency.value}  ${costDay.toFixed(2)}</span>
+รวม 1 เดือน <span>${currency.value}  ${costMonth.toFixed(2)}</span>`;
 }
 // Random number mode
 function generateRandom(){
@@ -406,14 +411,14 @@ question.innerText=`${a} ${op} ${b}`;
 function check(){
 let u=Number(answer.value);
 if(u==ans){
-quizResult.innerHTML="<span>✔ ถูกต้อง</span>";
+quizResult.innerHTML="<span style='color: lightgreen; font-family: \"Kanit\", sans-serif;'>✔ ถูกต้อง</span>";
 answer.value="";
 // Delay before showing new question
 setTimeout(newQ, 3000);
 // Clear result after 1.5 seconds
 setTimeout(() => { quizResult.innerHTML=""; }, 3000);
 }else{
-quizResult.innerHTML=`<span>✖ ไม่ถูกต้อง</span> คำตอบ: ${ans}`;
+quizResult.innerHTML=`<span style='color: red; font-family: \"Kanit\", sans-serif;'>✖ ไม่ถูกต้อง</span> คำตอบ: ${ans}`;
 answer.value="";
 // Delay before showing new question
 setTimeout(newQ, 3000);
@@ -455,10 +460,10 @@ let currency= currencyUnit.value || "THB";
 let r=data.rates[currency];
 let totalRate = r * (num.value || 1);
 if(r){
-currencyResult1.innerHTML=`<span>${num.value || 1} ${currencyUnitFrom.value} = ${totalRate.toFixed(2)} ${currency}</span>`;
+currencyResult1.innerHTML=`${num.value || 1} ${currencyUnitFrom.value} = <span style="font-size: 1.5em;">${totalRate.toFixed(2)} ${currency}</span> `;
 rate.value=r.toFixed(2);
 }else{
-currencyResult1.innerHTML=`<span>Currency code not found</span>`;
+currencyResult1.innerHTML=`<span style="font-family: 'HarmonyOS Sans', sans-serif;">Currency code not found</span>`;
 }
 })
 
