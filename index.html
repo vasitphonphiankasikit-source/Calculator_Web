@@ -508,16 +508,16 @@ try {
         <td class="bigNumber">${pttPrices.gasohol_e85.price}</td>
     </tr>
     <tr>
-        <td>${pttPrices.diesel_b7.name}</td>
-        <td class="bigNumber">${pttPrices.diesel_b7.price}</td>
+        <td>${pttPrices.diesel.name}</td>
+        <td class="bigNumber">${pttPrices.diesel.price}</td>
     </tr>
     <tr>
         <td>${pttPrices.premium_diesel.name}</td>
         <td class="bigNumber">${pttPrices.premium_diesel.price}</td>
     </tr>
     <tr>
-        <td>${pttPrices.premium_gasohol_95.name}</td>
-        <td class="bigNumber">${pttPrices.premium_gasohol_95.price}</td>
+        <td>${pttPrices.diesel_b20.name}</td>
+        <td class="bigNumber">${pttPrices.diesel_b20.price}</td>
     </tr>
     <tr>
         <td>${pttPrices.superpower_gasohol_95.name}</td>
@@ -567,17 +567,22 @@ goldResult.innerHTML = `
 <table>
     <tr>
         <th>ชนิดทองคำ</th>
-        <th>ราคาซื้อ</th>
-        <th>ราคาขาย</th>
+        <th>ราคา</th>
     </tr>
     <tr>
-        <td>ทองคำแท่ง</td>
+        <td>ทองคำแท่ง ซื้อ</td>
         <td class="bigNumber">${goldBarBuy}</td>
+    </tr>
+    <tr>
+        <td>ทองคำแท่ง ขาย</td>
         <td class="bigNumber">${goldBarSell}</td>
     </tr>
      <tr>
-        <td>ทองคำ</td>
+        <td>ทองคำ ซื้อ</td>
         <td class="bigNumber">${goldBuy}</td>
+    </tr>
+    <tr>
+        <td>ทองคำ ขาย</td>
         <td class="bigNumber">${goldSell}</td>
     </tr>
 </table>
